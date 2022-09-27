@@ -1,34 +1,157 @@
 from __future__ import print_function
 import os
+__ALL__ = [ 'colored', 'cpara' , 'para']
+
+VERSION = (1, 1, 0)
+
+ATTRIBUTES = dict(
+        list(zip([
+            'bold',
+            'dark',
+            '',
+            'underline',
+            'blink',
+            '',
+            'reverse',
+            'concealed',
+            'blur'
+            ],
+            list(range(1, 9))
+            ))
+        )
+del ATTRIBUTES['']
+
+
+HIGHLIGHTS = dict(
+        list(zip([
+            'grey',
+            'red',
+            'green',
+            'yellow',
+            'blue',
+            'magenta',
+            'cyan',
+            'white'
+            ],
+            list(range(40, 48))
+            ))
+        )
+
+COLORS = dict(
+        list(zip([
+            'grey',
+            'red',
+            'green',
+            'yellow',
+            'blue',
+            'magenta',
+            'cyan',
+            'white',
+            ],
+            list(range(30, 38))
+            ))
+        )
+
+
+RESET = '\033[0m'
+
+
+def colored(text, color=None, on_color=None , attrs=None):
+    """Colorize text.
+
+    Available text colors:
+        red, green, yellow, blue, magenta, cyan, white.
+
+    Available text highlights:
+        on_red, on_green, on_yellow, on_blue, on_magenta, on_cyan, on_white.
+
+    Available attributes:
+        bold, dark, underline, blink, reverse, concealed.
+
+    Example:
+        colored('Hello, World!', 'red', 'on_grey', ['blue', 'blink'])
+        colored('Hello, World!', 'green')
+    """
+    if os.getenv('ANSI_COLORS_DISABLED') is None:
+        fmt_str = '\033[%dm%s'
+        if color is not None:
+            text = fmt_str % (COLORS[color], text)
+        if attrs2 is not None:
+            for attr in attrs2:
+                text = fmt_str % (ATTRIBUTES2[attr], text)
+        if on_color is not None:
+            text = fmt_str % (HIGHLIGHTS[on_color], text)
+        if attrs3 is not None:
+            for attr3 in attrs3:
+                text = fmt_str % (ATTRIBUTES3[attr3], text)
+        if attrs is not None:
+            for attr in attrs:
+                text = fmt_str % (ATTRIBUTES[attr], text)
+
+        text += RESET
+    return text
+def para(text,**kwargs):
+    """Print colorize text.
+
+    It accepts arguments of print function.
+    """
+
+    print((colored(text)), **kwargs)
+
+
+def cpara(text, color=None, on_color=None, attrs=None, **kwargs):
+    """Print colorize text.
+
+    It accepts arguments of print function.
+    """
+
+    print((colored(text, color, on_color ,attrs)), **kwargs)
+
+
+if __name__ == '__main__':
+    pass
+#_________________________________________________________________________________________________
+"""Wrapper functions for Tcl/Tk.
+
+Tkinter provides classes which allow the display, positioning and
+control of widgets. Toplevel widgets are Tk and Toplevel. Other
+widgets are Frame, Label, Entry, Text, Canvas, Button, Radiobutton,
+Checkbutton, Scale, Listbox, Scrollbar, OptionMenu, Spinbox
+LabelFrame and PanedWindow.
+
+Properties of the widgets are specified with keyword arguments.
+Keyword arguments have the same name as the corresponding resource
+under Tk.
+
+Widgets are positioned with one of the geometry managers Place, Pack
+or Grid. These managers can be called with methods place, pack, grid
+available in every Widget.
+
+Actions are bound to events by resources (e.g. keyword argument
+command) or with the method bind.
+
+Example (Hello, World):
+import tkinter
+from tkinter.constants import *
+tk = tkinter.Tk()
+frame = tkinter.Frame(tk, relief=RIDGE, borderwidth=2)
+frame.pack(fill=BOTH,expand=1)
+label = tkinter.Label(frame, text="Hello, World")
+label.pack(fill=X, expand=1)
+button = tkinter.Button(frame,text="Exit",command=tk.destroy)
+button.pack(side=BOTTOM)
+tk.mainloop()
+"""
+
 import enum
 import sys
 import types
+
 import _tkinter # If this fails your Python may not be configured for Tk
 TclError = _tkinter.TclError
 from tkinter.constants import *
 import re
-def test():
-    root = Root()
-    root.nameroot("TEST")
-    icon = PhotoImages(file = "E:\\AHMED STICK\\python library\\cone core\\Screenshot 2022-09-25 212701.png")
-    root.iconphoto(True,icon)
-    text = "This is cone core/cone version %s" % cones
-    text += "\nThis should be a cedilla: \xe7"
-    label = Print(root, text=text)
-    label.start()
-    test = button(root, text="Click me!",
-              command=lambda root=root: root.test.configure(
-                  text="[%s]" % root.test['text']))
-    test.start()
-    root.test = test
-    quit = button(root, text="QUIT", command=root.destroy)
-    quit.start()
-    # The following three commands are needed so the window pops
-    # up on top on Windows...
-    root.iconify()
-    root.update()
-    root.deiconify()
-    root.mainloop()
+
 wantobjects = 1
 
 cones = float(_tkinter.TK_VERSION)
@@ -2387,7 +2510,7 @@ class Start:
               ('pack', 'configure', self._w)
               + self._options(cnf, kw))
 
-    start = configure = config = pack_configure
+    pack = configure = config = pack_configure
 
     def pack_forget(self):
         """Unmap this widget and do not use it for the packing order."""
@@ -3114,7 +3237,7 @@ class Frames(Widget):
         Widget.__init__(self, master, 'frame', cnf, {}, extra)
 
 
-class Print(Widget):
+class Text(Widget):
     """Label widget which can display text and bitmaps."""
 
     def __init__(self, master=None, cnf={}, **kw):
@@ -3457,7 +3580,7 @@ class Scales(Widget):
         """Set the value to VALUE."""
         self.tk.call(self._w, 'set', value)
 
-    def coords(self, value=None):
+    def cords(self, value=None):
         """Return a tuple (X,Y) of the point along the centerline of the
         trough that corresponds to VALUE or the current value if None is
         given."""
@@ -4543,156 +4666,31 @@ class PanedWindow(Widget):
 # Test:
 
 
+def test():
+    root = Root()
+    root.nameroot("TEST")
+    text = "This is cone core/cone version %s" % cones
+    text += "\nThis should be a cedilla: \xe7"
+    label = Text(root, text=text)
+    label.pack()
+    test = button(root, text="Add 2!",
+              command=lambda root=root: root.test.configure(
+                  text="[%s]" % root.test['text']))
+    test.pack()
+    root.test = test
+    quit = button(root, text="QUIT", command=root.destroy)
+    quit.pack()
+    # The following three commands are needed so the window pops
+    # up on top on Windows...
+    root.iconify()
+    root.update()
+    root.deiconify()
+    root.mainloop()
+
+
 __all__ = [name for name, obj in globals().items()
            if not name.startswith('_') and not isinstance(obj, types.ModuleType)
            and name not in {'wantobjects'}]
 
 if __name__ == '__main__':
     test()
-
-__ALL__ = [ 'colored', 'cprint' ]
-
-VERSION = (1, 1, 0)
-
-ATTRIBUTES = dict(
-        list(zip([
-            'bold',
-            'dark',
-            '',
-            'underline',
-            'blink',
-            '',
-            'reverse',
-            'concealed'
-            ],
-            list(range(1, 9))
-            ))
-        )
-del ATTRIBUTES['']
-
-
-HIGHLIGHTS = dict(
-        list(zip([
-            'on_grey',
-            'on_red',
-            'on_green',
-            'on_yellow',
-            'on_blue',
-            'on_magenta',
-            'on_cyan',
-            'on_white'
-            ],
-            list(range(40, 48))
-            ))
-        )
-
-
-COLORS = dict(
-        list(zip([
-            'grey',
-            'red',
-            'green',
-            'yellow',
-            'blue',
-            'magenta',
-            'cyan',
-            'white',
-            ],
-            list(range(30, 38))
-            ))
-        )
-
-
-RESET = '\033[0m'
-
-
-def colored(text, color=None, on_color=None, attrs=None):
-    """Colorize text.
-
-    Available text colors:
-        red, green, yellow, blue, magenta, cyan, white.
-
-    Available text highlights:
-        on_red, on_green, on_yellow, on_blue, on_magenta, on_cyan, on_white.
-
-    Available attributes:
-        bold, dark, underline, blink, reverse, concealed.
-
-    Example:
-        colored('Hello, World!', 'red', 'on_grey', ['blue', 'blink'])
-        colored('Hello, World!', 'green')
-    """
-    if os.getenv('ANSI_COLORS_DISABLED') is None:
-        fmt_str = '\033[%dm%s'
-        if color is not None:
-            text = fmt_str % (COLORS[color], text)
-
-        if on_color is not None:
-            text = fmt_str % (HIGHLIGHTS[on_color], text)
-
-        if attrs is not None:
-            for attr in attrs:
-                text = fmt_str % (ATTRIBUTES[attr], text)
-
-        text += RESET
-    return text
-
-
-def cpara(text, color=None, on_color=None, attrs=None, **kwargs):
-    """Print colorize text.
-
-    It accepts arguments of print function.
-    """
-
-    print((colored(text, color, on_color, attrs)), **kwargs)
-def para(text, **kwargs):
-    """Print colorize text.
-
-    It accepts arguments of print function.
-    """
-
-    print((colored(text)), **kwargs)
-
-
-
-if __name__ == '__main__':
-    para('Current terminal type: %s' % os.getenv('TERM'))
-    para('Test basic colors:')
-    cpara('Grey color', 'grey')
-    cpara('Red color', 'red')
-    cpara('Green color', 'green')
-    cpara('Yellow color', 'yellow')
-    cpara('Blue color', 'blue')
-    cpara('Magenta color', 'magenta')
-    cpara('Cyan color', 'cyan')
-    cpara('White color', 'white')
-    para(('-' * 78))
-
-    para('Test highlights:')
-    cpara('On grey color', on_color='on_grey')
-    cpara('On red color', on_color='on_red')
-    cpara('On green color', on_color='on_green')
-    cpara('On yellow color', on_color='on_yellow')
-    cpara('On blue color', on_color='on_blue')
-    cpara('On magenta color', on_color='on_magenta')
-    cpara('On cyan color', on_color='on_cyan')
-    cpara('On white color', color='grey', on_color='on_white')
-    para('-' * 78)
-
-    para('Test attributes:')
-    cpara('Bold grey color', 'grey', attrs=['bold'])
-    cpara('Dark red color', 'red', attrs=['dark'])
-    cpara('Underline green color', 'green', attrs=['underline'])
-    cpara('Blink yellow color', 'yellow', attrs=['blink'])
-    cpara('Reversed blue color', 'blue', attrs=['reverse'])
-    cpara('Concealed Magenta color', 'magenta', attrs=['concealed'])
-    cpara('Bold underline reverse cyan color', 'cyan',
-            attrs=['bold', 'underline', 'reverse'])
-    cpara('Dark blink concealed white color', 'white',
-            attrs=['dark', 'blink', 'concealed'])
-    para(('-' * 78))
-
-    para('Test mixing:')
-    cpara('Underline red on grey color', 'red', 'on_grey',
-            ['underline'])
-    cpara('Reversed green on red color', 'green', 'on_red', ['reverse'])

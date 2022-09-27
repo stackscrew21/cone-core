@@ -9,13 +9,13 @@ classifiers = [
 ]
 
 setup(
-    name='cone-core',
+    name='cone_core',
     version='0.0.1',
     description='That is a code but it can be used in python',
     long_description=open('README.txt').read() + '\n\n' + open('CHANGELOG.txt').read(),
     url='',
-    author='Stacks crew',
-    author_email='stackshado2@gmail.com',
+    author='stacks crew',
+    author_email='josh@edublocks.org',
     license='MIT',
     classifiers=classifiers,
     keywords='code',
