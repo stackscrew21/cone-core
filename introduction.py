@@ -1,0 +1,16 @@
+from __init__ import *
+root = Root()
+root.title("intro")
+def ok():
+    winds = Root()
+    winds.title("cone core")
+    cones = Print(winds, text="do what you want.")
+    cones.config(fg="orange",font=("report",56), width=16)
+    cones.start()
+    okse = button(winds, text="ok", bg="black", fg="dark red", font=("report", 50))
+    okse.start()
+hello = Print(root, text="hello and welcome to cone core", font="report", fg="red")
+oks = button(root, text="ok", bg="orange", fg="white", font=90, width="20",height=2, command=ok)
+hello.start()
+oks.start()
+mainloop()
