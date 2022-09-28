@@ -1,9 +1,0 @@
-Global-includes *.cone*.py
-______________or_____________
-Global-includes *.cn*.py
-______________or_____________
-Global-includes *.txt*.py
-______________or_____________
-Global-includes *.core*.py
-______________or_____________
-Global-includes *.conecore*.py
