@@ -1,6 +1,6 @@
 from __init__ import *
 root = Root()
-root.title("intro")
+root.nameroot("intro")
 def ok():
     winds = Root()
     winds.title("cone core")
