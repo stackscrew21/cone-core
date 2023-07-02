@@ -14,11 +14,11 @@ setup(
     description='That is a code but it can be used in python',
     long_description=open('README.txt').read() + '\n\n' + open('CHANGELOG.txt').read(),
     url='',
-    author='stacks crew',
+    author='stacks crew and ahmed bailgh',
     author_email='josh@edublocks.org',
     license='MIT',
     classifiers=classifiers,
-    keywords='code',
+    keywords='Tkinter',
     packages=find_packages(),
     install_requires=['']
 )
