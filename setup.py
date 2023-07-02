@@ -15,7 +15,7 @@ setup(
     long_description=open('README.txt').read() + '\n\n' + open('CHANGELOG.txt').read(),
     url='',
     author='stacks crew and ahmed bailgh',
-    author_email='josh@edublocks.org',
+    author_email='ahmedgamejd1992@gmail.com',
     license='MIT',
     classifiers=classifiers,
     keywords='Tkinter',
